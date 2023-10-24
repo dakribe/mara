@@ -4,7 +4,6 @@ import { Form } from "@remix-run/react";
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const title = String(formData.get("title"));
-  console.log(title);
   const res = await fetch("http://localhost:8000/api/events/", {
     method: "POST",
     body: JSON.stringify({ title }),
@@ -13,9 +12,9 @@ export async function action({ request }: ActionFunctionArgs) {
     },
   });
   if (res.ok) {
-    return redirect("/event");
+    return redirect("/events");
   }
-  return redirect("/event");
+  return redirect("/events");
 }
 
 // Action to submit a form to create an event
