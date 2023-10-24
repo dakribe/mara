@@ -26,4 +26,8 @@ public class EventService {
         return eventRepository.findById(id);
     }
 
+    public void deleteById(UUID id) {
+       eventRepository.deleteById(id);
+    }
+
 }
