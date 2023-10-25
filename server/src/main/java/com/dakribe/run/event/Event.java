@@ -18,6 +18,10 @@ public class Event {
 
     private String title;
 
+    private String state;
+
+    private String city;
+
     public UUID getId() {
         return id;
     }

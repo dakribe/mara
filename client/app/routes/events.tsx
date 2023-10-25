@@ -1,5 +1,6 @@
+import { Button } from "@app/components/ui/button";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useFetcher } from "@remix-run/react";
 
 type Event = {
   id: string;
@@ -17,14 +18,22 @@ export const loader = async () => {
   return json(data);
 };
 
-export default function EventPage() {
+export default function Events() {
   const events = useLoaderData<typeof loader>();
+  const fetcher = useFetcher();
+
   return (
     <div>
-      <h1>All events</h1>
+      <h1 className="font-bold ">All events</h1>
       <div>
         {events.map((event: Event) => (
-          <p key={event.id}>{event.title}</p>
+          <ul key={event.id}>
+            <li>{event.title}</li>
+            <fetcher.Form method="POST" action="delete">
+              <input type="hidden" name="id" value={event.id} />
+              <Button type="submit">Delete</Button>
+            </fetcher.Form>
+          </ul>
         ))}
       </div>
     </div>
