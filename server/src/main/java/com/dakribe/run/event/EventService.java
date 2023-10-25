@@ -1,5 +1,6 @@
 package com.dakribe.run.event;
 
+import com.dakribe.run.event.exception.EventNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,12 +23,17 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    Optional<Event> read(UUID id) {
+    Optional<Event> findEventById(UUID id) {
         return eventRepository.findById(id);
     }
 
-    public void deleteById(UUID id) {
-       eventRepository.deleteById(id);
+    public void deleteEvent(UUID id) {
+        Event event = eventRepository.findById(id).orElse(null);
+        if (event == null) {
+            throw new EventNotFoundException("Event with id " + id + " not found");
+        }
+
+        eventRepository.deleteById(id);
     }
 
 }

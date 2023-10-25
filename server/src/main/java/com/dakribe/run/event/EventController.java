@@ -1,7 +1,9 @@
 package com.dakribe.run.event;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -19,14 +21,20 @@ public class EventController {
         return this.eventService.list();
     }
 
+    @GetMapping("/{id}")
+    Optional<Event> byId(@PathVariable UUID id) {
+        return this.eventService.findEventById(id);
+    }
+
     @PostMapping("/")
     Event create(@RequestBody Event event) {
         return this.eventService.createEvent(event);
     }
 
     @DeleteMapping("/{id}")
-    void delete(@PathVariable UUID id) {
-       this.eventService.deleteById(id);
+    ResponseEntity<String> delete(@PathVariable UUID id) {
+       this.eventService.deleteEvent(id);
+       return ResponseEntity.ok("Event deleted");
     }
 
 }
