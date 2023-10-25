@@ -9,5 +9,9 @@ export async function action({ request }: ActionFunctionArgs) {
     method: "DELETE",
   });
 
+  if (res.status === 404) {
+    throw new Error("Event not found");
+  }
+
   return null;
 }

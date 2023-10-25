@@ -10,13 +10,23 @@ type Event = {
 export const loader = async () => {
   const apiUrl = "http://localhost:8000/api/events/";
   const res = await fetch(apiUrl);
-  if (res.status !== 200) {
-    throw new Response("Not found", { status: 404 });
+
+  if (res.status === 500) {
+    throw new Error("Unable to fetch evnts");
   }
+
   const data = await res.json();
 
   return json(data);
 };
+
+export function ErrorBoundary() {
+  return (
+    <div>
+      <p>Unable to get events</p>
+    </div>
+  );
+}
 
 export default function Events() {
   const events = useLoaderData<typeof loader>();
