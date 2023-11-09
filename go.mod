@@ -1,4 +1,4 @@
-module github.com/dakribe/run/server
+module github.com/dakribe/mara
 
 go 1.21.0
 
