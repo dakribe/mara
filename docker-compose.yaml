@@ -1,10 +1,16 @@
 version: "3.8"
 
 services:
+  server:
+    container_name: mara-server
+    build:
+      context: ./
+    ports:
+      - "8000:8000"
+
   postgres:
     container_name: mara-db
     image: postgres:15-alpine
-    restart: unless-stopped
     ports:
       - "5433:5432"
     environment:
