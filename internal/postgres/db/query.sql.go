@@ -8,7 +8,7 @@ package db
 import (
 	"context"
 
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 const createEvent = `-- name: CreateEvent :one

@@ -5,7 +5,7 @@
 package db
 
 import (
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 type Event struct {
