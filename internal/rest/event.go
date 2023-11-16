@@ -22,6 +22,7 @@ func NewEventHandler(svc service.EventService) *EventHandler {
 
 func (e *EventHandler) Register(r *chi.Mux) {
 	r.Post("/events", e.create)
+	r.Get("/events", e.list)
 }
 
 func (e *EventHandler) create(w http.ResponseWriter, r *http.Request) {
@@ -41,4 +42,15 @@ func (e *EventHandler) create(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(event)
+}
+
+func (e *EventHandler) list(w http.ResponseWriter, r *http.Request) {
+	events, err := e.svc.List(context.Background())
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(events)
 }

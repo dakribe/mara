@@ -27,3 +27,12 @@ func (e *EventService) Create(ctx context.Context, params internal.CreateEventPa
 
 	return event, nil
 }
+
+func (e *EventService) List(ctx context.Context) ([]db.Event, error) {
+	events, err := e.repo.List(ctx)
+	if err != nil {
+		return []db.Event{}, errors.New("Unable to list events")
+	}
+
+	return events, nil
+}

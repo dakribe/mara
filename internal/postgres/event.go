@@ -26,3 +26,12 @@ func (e *Event) Create(ctx context.Context, params internal.CreateEventParams) (
 
 	return event, nil
 }
+
+func (e *Event) List(ctx context.Context) ([]db.Event, error) {
+	events, err := e.q.ListEvents(ctx)
+	if err != nil {
+		return []db.Event{}, errors.New("Unable to retrieve events")
+	}
+
+	return events, nil
+}
