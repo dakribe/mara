@@ -18,9 +18,7 @@ jobs:
           node-version: lts/*
 
       - name: Install dependencies
-        run: npm install
-        with:
-          work-dir: infra
+        run: npm --prefix ./infra install
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
