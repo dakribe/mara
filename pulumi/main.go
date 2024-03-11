@@ -24,9 +24,9 @@ func main() {
 
 		testFunction, err := CreateFunction(CreateFunctionArgs{
 			ctx:  ctx,
-			name: "test_function",
+			name: "testFunction",
 			role: role,
-			code: pulumi.NewFileArchive("../testHandler"),
+			code: pulumi.NewFileArchive("../handler.zip"),
 		})
 		if err != nil {
 			return err
@@ -35,12 +35,18 @@ func main() {
 		api, err := CreateAPI(CreateAPIArgs{
 			ctx: ctx,
 		})
+		if err != nil {
+			return err
+		}
 
 		testRoute, err := CreateApiRoute(ctx, api, ApiRouteArgs{
 			function:  testFunction,
 			routeKey:  pulumi.String("GET /"),
 			routeName: "test",
 		})
+		if err != nil {
+			return nil
+		}
 
 		_, err = apigatewayv2.NewStage(ctx, "dev", &apigatewayv2.StageArgs{
 			ApiId:      api.ID(),
@@ -54,6 +60,12 @@ func main() {
 				},
 			},
 		})
+		if err != nil {
+			return err
+		}
+
+		apiUrl := pulumi.Sprintf("%s/dev/", api.ApiEndpoint)
+		ctx.Export("API Endpoint: ", apiUrl)
 
 		return nil
 	})

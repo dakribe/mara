@@ -39,7 +39,7 @@ func CreateApiRoute(ctx *pulumi.Context, gateway *apigatewayv2.Api, args ApiRout
 		return &apigatewayv2.Route{}, nil
 	}
 
-	target := pulumi.Sprintf("Integrations/%s", integration.ID())
+	target := pulumi.Sprintf("integrations/%s", integration.ID())
 
 	route, err := apigatewayv2.NewRoute(ctx, args.routeName+"Route", &apigatewayv2.RouteArgs{
 		ApiId:    gateway.ID(),
