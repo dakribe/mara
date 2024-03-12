@@ -8,7 +8,7 @@ import (
 
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
-		role, err := iam.NewRole(ctx, "task-exec-role", &iam.RoleArgs{
+		lambdaRole, err := iam.NewRole(ctx, "task-exec-role", &iam.RoleArgs{
 			AssumeRolePolicy: pulumi.String(`{
 				"Version": "2012-10-17",
 				"Statement": [{
@@ -22,10 +22,35 @@ func main() {
 			}`),
 		})
 
+		_, err = MaraDB(ctx)
+		if err != nil {
+			return err
+		}
+
+		_, err = iam.NewRolePolicy(ctx, "lambdaRolePolicy", &iam.RolePolicyArgs{
+			Role: lambdaRole.Name,
+			Policy: pulumi.String(`{
+				"Version": "2012-10-17",
+				"Statement": [{
+					"Action": [
+							"dynamodb:GetItem",
+							"dynamodb:PutItem",
+							"dynamodb:UpdateItem",
+							"dynamodb:DeleteItem"
+					],
+					"Effect": "Allow",
+					"Resource": "*"
+				}]
+			}`),
+		})
+		if err != nil {
+			return err
+		}
+
 		testFunction, err := CreateFunction(CreateFunctionArgs{
 			ctx:  ctx,
 			name: "testFunction",
-			role: role,
+			role: lambdaRole,
 			code: pulumi.NewFileArchive("../handler.zip"),
 		})
 		if err != nil {
