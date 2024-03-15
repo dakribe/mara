@@ -1,11 +1,8 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 
-interface Event {
-  id: string;
-  title: string;
-}
+import { EventType } from "../components/event-map/types";
 
-async function getEvents() {
+async function getEvents(): Promise<EventType[]> {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/events`);
   const data = res.json();
   return data;
@@ -22,7 +19,7 @@ function Index() {
     <div>
       <h1>Home</h1>
       <ul>
-        {events.map((event: Event) => (
+        {events.map((event) => (
           <Link
             to="/events/$eventId"
             params={{
