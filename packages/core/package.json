@@ -1,0 +1,18 @@
+{
+  "name": "core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "db:push": "pnpm drizzle-kit push",
+    "db:studio": "pnpm drizzle-kit studio "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "drizzle-kit": "^0.22.8",
+    "drizzle-orm": "^0.31.2",
+    "postgres": "^3.4.4"
+  }
+}
