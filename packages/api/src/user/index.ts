@@ -4,14 +4,16 @@ import { user } from "./user.sql";
 import { hash } from "@node-rs/argon2";
 
 export const byUsername = async (username: string) => {
-	await db.transaction(async (tx) => {
-		const [foundUser] = await tx
-			.select()
-			.from(user)
-			.where(eq(user.username, username))
-			.execute();
-		return foundUser;
-	});
+	const [foundUser] = await db
+		.select()
+		.from(user)
+		.where(eq(user.username, username));
+
+	return foundUser;
+
+	// await db.transaction(async (tx) => {
+	// 	await tx.select().from(user).where(eq(user.username, username)).execute();
+	// });
 };
 
 export const create = async (username: string, password: string) => {
