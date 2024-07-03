@@ -12,17 +12,21 @@ type User = {
   username: string;
 };
 
+type Session = {
+  user: User;
+};
+
 type AuthContextType = {
-  user: Accessor<User | null>;
+  session: Accessor<Session | null>;
   isAuthenticated: Accessor<boolean>;
   login: (username: string, password: string) => Promise<boolean>;
-  getUser: () => Promise<User | null>;
+  getUser: () => Promise<Session | null>;
 };
 
 const AuthContext = createContext<AuthContextType>();
 
 export function AuthProvider(props: { children: JSX.Element }) {
-  const [user, setUser] = createSignal<User | null>(null);
+  const [session, setSession] = createSignal<Session | null>(null);
   const [isAuthenticated, setIsAuthenticated] = createSignal(false);
 
   async function login(username: string, password: string) {
@@ -30,13 +34,15 @@ export function AuthProvider(props: { children: JSX.Element }) {
       const res = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain",
         },
         body: JSON.stringify({ username, password }),
         credentials: "include",
       });
+      console.log("after fetch");
 
       if (res.ok) {
+        console.log(res);
         return true;
       }
     } catch (error) {
@@ -45,24 +51,24 @@ export function AuthProvider(props: { children: JSX.Element }) {
     return false;
   }
 
-  async function getUser(): Promise<User | null> {
+  async function getUser(): Promise<Session | null> {
     try {
       const res = await fetch("http://localhost:3000/me", {
         credentials: "include",
       });
 
       if (res.ok) {
-        const userData: User = await res.json();
-        setUser(userData);
+        const userData: Session = await res.json();
+        setSession(userData);
         setIsAuthenticated(true);
         return userData;
       } else {
-        setUser(null);
+        setSession(null);
         setIsAuthenticated(false);
       }
     } catch (error) {
       console.log("Get User Error", error);
-      setUser(null);
+      setSession(null);
       setIsAuthenticated(false);
     }
     return null;
@@ -79,7 +85,7 @@ export function AuthProvider(props: { children: JSX.Element }) {
   });
 
   const value: AuthContextType = {
-    user,
+    session,
     isAuthenticated,
     login,
     getUser,

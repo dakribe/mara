@@ -4,9 +4,18 @@ import { byUsername, create } from "./user";
 import { lucia } from "./auth";
 import { verify } from "@node-rs/argon2";
 import type { Context } from "./auth";
+import { cors } from "hono/cors";
 
 const app = new Hono<Context>();
 app.use(logger());
+app.use(
+	"/*",
+	cors({
+		origin: "http://localhost:5173",
+		allowMethods: ["GET", "POST"],
+		credentials: true,
+	}),
+);
 
 app.get("/", (c) => {
 	return c.text("Hello Hono!");
