@@ -95,12 +95,12 @@ app.post("/logout", async (c) => {
 	return c.json({ message: "success" }, 200);
 });
 
-app.get("/secret", async (c) => {
+app.get("/me", async (c) => {
 	const user = c.get("user");
 	if (!user) {
-		return c.redirect("/login");
+		return c.json({ error: "Unauthorized" }, 401);
 	}
-	return c.json({ hello: `${user.username}` });
+	return c.json({ user }, 200);
 });
 
 export default app;
