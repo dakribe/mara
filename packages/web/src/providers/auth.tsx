@@ -39,15 +39,11 @@ export function AuthProvider(props: { children: JSX.Element }) {
         body: JSON.stringify({ username, password }),
         credentials: "include",
       });
-      console.log("after fetch");
 
       if (res.ok) {
-        console.log(res);
         return true;
       }
-    } catch (error) {
-      console.log("Login Error", error);
-    }
+    } catch (error) {}
     return false;
   }
 
@@ -67,7 +63,6 @@ export function AuthProvider(props: { children: JSX.Element }) {
         setIsAuthenticated(false);
       }
     } catch (error) {
-      console.log("Get User Error", error);
       setSession(null);
       setIsAuthenticated(false);
     }
@@ -78,10 +73,8 @@ export function AuthProvider(props: { children: JSX.Element }) {
     await getUser();
   };
 
-  // Check authentication status when the component mounts
   createEffect(() => {
     checkAuth();
-    console.log("Running auth check");
   });
 
   const value: AuthContextType = {

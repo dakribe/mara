@@ -12,10 +12,8 @@ export function ProtectedRoute(props: ProtectedRouteProps) {
 
   const checkAuth = async () => {
     if (!auth.isAuthenticated()) {
-      // If not authenticated, try to get the user
       const user = await auth.getUser();
       if (!user) {
-        // If still not authenticated, redirect to login
         nav("/login", { replace: true });
       }
     }
