@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@kobalte/core": "^0.13.3",
     "@macaron-css/core": "^1.5.2",
     "@macaron-css/solid": "^1.5.3",
     "@macaron-css/vite": "^1.5.1",

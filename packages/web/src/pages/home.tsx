@@ -1,18 +1,20 @@
-import { styled } from "@macaron-css/solid";
 import { Navbar } from "../components/navbar";
-import { background } from "../ui/theme";
+import { style } from "@macaron-css/core";
+import { theme } from "../ui/theme";
+import { Button } from "../ui/button";
 
-const Root = styled("div", {
-  base: {
-    background: background,
-  },
+const heading = style({
+  color: theme.foreground,
 });
 
 export function Home() {
   return (
-    <Root>
+    <>
       <Navbar />
-      <h1>Home</h1>
-    </Root>
+      <h1 class={heading}>Home</h1>
+      <Button color="primary">Login</Button>
+
+      <Button color="danger">Login</Button>
+    </>
   );
 }
