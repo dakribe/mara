@@ -9,11 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@deck.gl/core": "^9.0.24",
+    "@deck.gl/layers": "^9.0.24",
+    "@deck.gl/mapbox": "^9.0.24",
     "@kobalte/core": "^0.13.3",
     "@modular-forms/solid": "^0.22.1",
     "@solidjs/router": "^0.13.6",
     "ky": "^1.4.0",
+    "mapbox-gl": "^3.5.2",
     "solid-js": "^1.8.17",
+    "solid-map-gl": "^1.11.3",
     "valibot": "^0.35.0"
   },
   "devDependencies": {
