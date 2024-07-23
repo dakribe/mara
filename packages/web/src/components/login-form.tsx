@@ -31,14 +31,24 @@ export function LoginForm() {
   };
 
   return (
-    <Form onSubmit={handleLogin}>
-      <Field name="username">
-        {(field, props) => <input {...props} type="text" />}
-      </Field>
-      <Field name="password">
-        {(field, props) => <input {...props} type="text" />}
-      </Field>
-      <button>Login</button>
-    </Form>
+    <div class="w-40">
+      <Form onSubmit={handleLogin}>
+        <div class="flex flex-col gap-4">
+          <Field name="username">
+            {(field, props) => (
+              <div>
+                <input {...props} type="text" placeholder="username" />
+              </div>
+            )}
+          </Field>
+          <Field name="password">
+            {(field, props) => (
+              <input {...props} type="text" placeholder="********" />
+            )}
+          </Field>
+          <button class="bg-brand-500 text-foreground px-4 py-2">Login</button>
+        </div>
+      </Form>
+    </div>
   );
 }

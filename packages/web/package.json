@@ -10,9 +10,6 @@
   },
   "dependencies": {
     "@kobalte/core": "^0.13.3",
-    "@macaron-css/core": "^1.5.2",
-    "@macaron-css/solid": "^1.5.3",
-    "@macaron-css/vite": "^1.5.1",
     "@modular-forms/solid": "^0.22.1",
     "@solidjs/router": "^0.13.6",
     "ky": "^1.4.0",
@@ -20,6 +17,9 @@
     "valibot": "^0.35.0"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",
     "vite-plugin-solid": "^2.10.2"
